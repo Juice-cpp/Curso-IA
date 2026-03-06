@@ -1,91 +1,60 @@
 # Módulo 5: Visão Computacional
 
+Este README foi ajustado para ficar **parelho com o conteúdo e a ordem** do notebook `notebook.ipynb` (teoria + exemplos).
+
 **Carga Horária:** 12 horas  
 **Nível:** Graduação/Pós-graduação  
 **Pré-requisitos:** Módulos anteriores (Python, ML, Deep Learning básico). Conhecimentos de redes neurais e TensorFlow/PyTorch são desejáveis.
 
 ---
 
-## 📋 Objetivos
+## 📦 O que tem nesta pasta
+
+- `notebook.ipynb`: aula (teoria + exemplos)
+- `AWS-1/`: dataset exportado do Roboflow em formato YOLOv8 (train/valid/test)
+- `yolov8n.pt`, `yolov8l.pt`, `yolov8s-seg.pt`: pesos pré-treinados do YOLO
+- `image.jpg`, `dog.jpeg`: imagens usadas em exemplos
+
+---
+
+## 📋 Objetivos (iguais ao notebook)
 
 Ao final deste módulo, você será capaz de:
 
-- ✅ Compreender os fundamentos da Visão Computacional e suas aplicações
-- ✅ Dominar técnicas básicas de processamento de imagens com OpenCV
-- ✅ Entender o funcionamento das Redes Neurais Convolucionais (CNNs)
-- ✅ Aplicar Transfer Learning para classificação e detecção
-- ✅ Utilizar o Roboflow para gerenciamento de datasets
-- ✅ Treinar um modelo de detecção de objetos com YOLOv8 em um dataset customizado
+- Compreender o que é Visão Computacional e suas aplicações
+- Aplicar operações comuns de processamento de imagens com OpenCV
+- Entender os blocos básicos de uma CNN (convolução e pooling)
+- Aplicar Transfer Learning com modelos pré-treinados
+- Entender métricas de avaliação (classificação e detecção)
+- Usar Roboflow para organizar/baixar datasets
+- Treinar/validar/inferir com YOLOv8 (Ultralytics)
 
 ---
 
-## 📚 Sumário
+## 📚 Sumário (conteúdo do notebook)
 
-### 1. Fundamentos de Visão Computacional
-- 1.1 O que é Visão Computacional?
-- 1.2 Aplicações
-- 1.3 Desafios
-
-### 2. Processamento de Imagens com OpenCV
-- 2.1 Introdução ao OpenCV
-- 2.2 Leitura e exibição de imagens
-- 2.3 Redimensionamento
-- 2.4 Normalização
-- 2.5 Conversão de cores
-- 2.6 Operações básicas (borramento, threshold)
-
-### 3. Redes Neurais Convolucionais (CNNs)
-- 3.1 Por que CNNs para imagens?
-- 3.2 Camadas convolucionais
-- 3.3 Pooling
-- 3.4 Arquiteturas clássicas (LeNet, AlexNet, VGG, ResNet)
-
-### 4. Transfer Learning
-- 4.1 Conceito e motivação
-- 4.2 Estratégias: fine-tuning vs feature extraction
-- 4.3 Exemplo com TensorFlow/Keras
-
-### 5. Avaliação de Modelos de Visão
-- 5.1 Métricas para classificação
-- 5.2 Métricas para detecção: IoU, Precision, Recall, mAP
-- 5.3 Curva Precision-Recall
-
-### 6. Introdução ao Roboflow
-- 6.1 O que é Roboflow?
-- 6.2 Roboflow Universe: datasets públicos
-- 6.3 Exportando datasets para diferentes formatos
-
-### 7. Detecção de Objetos com YOLO
-- 7.1 O que é YOLO? (You Only Look Once)
-- 7.2 Evolução: YOLOv8 e YOLOv11
-- 7.3 Instalação da biblioteca Ultralytics
-- 7.4 Treinamento com um dataset customizado
-- 7.5 Inferência e avaliação
-
-### 8. Atividade Prática
-- 8.1 Objetivo
-- 8.2 Passo a passo
-- 8.3 Entrega
-
-### 9. Conclusão e Próximos Passos
-
-### 10. Referências
+1. O que é Visão Computacional
+2. Processamento de imagens com OpenCV
+3. CNN (Rede Neural Convolucional)
+4. Transfer Learning
+5. Avaliação de modelos
+6. Roboflow
+7. Detecção de objetos com YOLO (YOLOv8)
+8. Atividade Prática — MNIST (classificação)
 
 ---
 
-## 1️⃣ Fundamentos de Visão Computacional
+## 1️⃣ O que é Visão Computacional
 
-### 1.1 O que é Visão Computacional?
-
-**Visão Computacional** é um campo da inteligência artificial que capacita máquinas a interpretar e entender o mundo visual a partir de imagens ou vídeos. O objetivo é replicar a capacidade humana de reconhecer objetos, cenas e extrair informações úteis.
+**Visão Computacional** é um campo da IA que capacita máquinas a interpretar e entender o mundo visual a partir de imagens e vídeos. O objetivo é replicar a capacidade humana de reconhecer objetos, cenas e extrair informações.
 
 **Relação com outros campos:**
 
-- **Processamento de imagens:** Transformações de imagem para melhorar qualidade ou extrair características
-- **Machine Learning:** Algoritmos que aprendem a partir de dados visuais
-- **Deep Learning:** Redes neurais profundas, especialmente CNNs, que revolucionaram a área
+- **Processamento de imagens:** transformações para melhorar qualidade/extrair características
+- **Machine Learning:** algoritmos que aprendem a partir de dados visuais
+- **Deep Learning:** CNNs (redes neurais convolucionais) que revolucionaram a área
 
-### 1.2 Aplicações
+### Aplicações
 
 | Área | Exemplos |
 |------|----------|
@@ -96,423 +65,359 @@ Ao final deste módulo, você será capaz de:
 | **Agricultura** | Monitoramento de plantações, detecção de pragas |
 | **Indústria** | Inspeção de qualidade, robótica |
 
-### 1.3 Desafios
+### Desafios
 
-- **Variabilidade intraclasse:** Um mesmo objeto pode ter aparências muito diferentes (ex: cadeiras de vários modelos)
-- **Condições de iluminação:** Sombras, reflexos
-- **Oclusões:** Objetos parcialmente escondidos
-- **Escala e rotação:** Objetos podem aparecer em diferentes tamanhos e orientações
-- **Background complexo:** Fundo confuso pode atrapalhar a detecção
+- Variabilidade intraclasse (mesmo objeto com aparências diferentes)
+- Condições de iluminação (sombras, reflexos)
+- Oclusões (objetos parcialmente escondidos)
+- Escala e rotação (tamanhos/orientações diferentes)
+- Background complexo (fundo “poluído” atrapalha a detecção)
 
 ---
 
-## 2️⃣ Processamento de Imagens com OpenCV
+## 2️⃣ Processamento de imagens com OpenCV
 
-### 2.1 Introdução ao OpenCV
+O **OpenCV** é a biblioteca mais popular de visão computacional e reúne um grande conjunto de algoritmos para leitura, transformação, filtros e extração de informações.
 
-**OpenCV (Open Source Computer Vision Library)** é uma biblioteca opensource amplamente utilizada para processamento de imagens e visão computacional. Oferece mais de 2.500 algoritmos otimizados.
+### Instalação (no notebook)
 
-**Principais funcionalidades:**
-- Leitura e escrita de imagens e vídeos
-- Transformações geométricas
-- Filtros e operações morfológicas
-- Detecção de features e objetos
-- Integração com frameworks de Deep Learning
+```python
+%pip install -q opencv-python matplotlib numpy
+```
 
-### 2.2 Leitura e Exibição de Imagens
+### Leitura e exibição de imagem
+
+- `cv2.imread()` lê em **BGR**
+- `cv2.cvtColor()` converte **BGR → RGB** para exibir corretamente no matplotlib
 
 ```python
 import cv2
 import matplotlib.pyplot as plt
 
-# Carregar imagem
-img = cv2.imread('imagem.jpg')
-
-# OpenCV lê em BGR, converter para RGB
+img = cv2.imread("image.jpg")
 img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-# Exibir
 plt.imshow(img_rgb)
-plt.axis('off')
+plt.axis("off")
 plt.show()
 ```
 
-### 2.3 Operações Básicas
+### Redimensionamento
 
-- **Redimensionamento:** Alterar dimensões da imagem
-- **Normalização:** Escalar valores de pixel para [0, 1]
-- **Conversão de cores:** BGR ↔ RGB ↔ Grayscale
-- **Borramento:** Reduzir ruído (Gaussian blur, Median blur)
-- **Threshold:** Binarização de imagens
+O `cv2.resize()` suporta diferentes interpolações:
+
+- `cv2.INTER_LINEAR`: bilinear (boa opção geral)
+- `cv2.INTER_CUBIC`: cúbica (melhor qualidade, mais lenta)
+- `cv2.INTER_NEAREST`: vizinho mais próximo (rápida)
+
+```python
+img_resized = cv2.resize(img_rgb, (224, 224))
+```
+
+### Normalização e padronização
+
+- **Normalização:** $[0,255] \to [0,1]$ dividindo por 255
+- **Padronização:** subtrair média e dividir pelo desvio (ex: estatísticas do ImageNet)
+
+```python
+img_norm = img_rgb / 255.0
+
+mean = [0.485, 0.456, 0.406]
+std = [0.229, 0.224, 0.225]
+img_std = (img_norm - mean) / std
+```
+
+### Conversão de cores
+
+- **RGB → Grayscale**: útil para bordas, limiarização, etc.
+- **RGB → HSV**: útil para segmentação baseada em cor
+
+```python
+img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2GRAY)
+img_hsv = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2HSV)
+```
+
+### Operações básicas (efeitos)
+
+- **Gaussian Blur:** suaviza a imagem e reduz ruído
+- **Threshold binário:** converte para dois níveis (0/255) com base em um limiar
+
+```python
+img_blur = cv2.GaussianBlur(img_rgb, (5, 5), 0)
+_, img_thresh = cv2.threshold(img_gray, 127, 255, cv2.THRESH_BINARY)
+```
+
+### Detecção de bordas (Canny)
+
+```python
+img_canny = cv2.Canny(img_gray, 100, 200)
+```
+
+### Transformações geométricas
+
+No notebook há um exemplo de rotação usando matriz de transformação + `cv2.warpAffine()`.
+
+```python
+M = cv2.getRotationMatrix2D((224, 224), 45, 1)
+img_rotated = cv2.warpAffine(img_rgb, M, (224, 224))
+```
 
 ---
 
-## 3️⃣ Redes Neurais Convolucionais (CNNs)
+## 3️⃣ CNN (Rede Neural Convolucional)
 
-### 3.1 Por que CNNs para Imagens?
+Em imagens, pixels vizinhos costumam estar relacionados, formando padrões locais (bordas, texturas, formas). CNNs exploram essa estrutura; redes totalmente conectadas (densas) tendem a gerar muitos parâmetros e a ignorar a organização espacial.
 
-As CNNs são especialmente projetadas para dados com estrutura espacial, como imagens. Diferentemente das redes totalmente conectadas (MLPs), as CNNs:
+Exemplo de ordem de grandeza (como no notebook): uma imagem 224×224×3 tem 150.528 valores. Se a primeira camada densa tiver 128 neurônios, isso dá ~19 milhões de pesos só nessa camada (fora vieses), aumentando custo computacional e risco de overfitting.
 
-- **Preservam a estrutura espacial** dos dados
-- **Compartilham parâmetros** (filtros convolucionais)
-- **Capturam hierarquia de features:** bordas → texturas → partes → objetos
+### Camadas convolucionais
 
-### 3.2 Camadas Convolucionais
+Uma camada convolucional aplica **filtros (kernels)** sobre a imagem, gerando **mapas de características (feature maps)**.
 
-Aplicam filtros (kernels) que deslizam pela imagem, detectando padrões locais:
+Parâmetros principais (como no notebook):
 
-- **Filtros de baixo nível:** Detectam bordas, cantos
-- **Filtros de alto nível:** Detectam formas complexas, objetos
+- **Filters:** número de filtros (quantos mapas de características)
+- **Stride:** passo do filtro (ex: 1 ou 2)
+- **Padding:** se adiciona bordas para manter tamanho (ex: `same`) ou não (`valid`)
 
-### 3.3 Pooling
+Exemplo rápido (TensorFlow/Keras):
 
-Reduz a dimensionalidade espacial, mantendo as features mais importantes:
+```python
+import tensorflow as tf
+from tensorflow.keras.layers import Conv2D
 
-- **Max Pooling:** Seleciona o valor máximo em uma região
-- **Average Pooling:** Calcula a média
+conv_layer = Conv2D(
+    filters=32,
+    kernel_size=(3, 3),
+    activation="relu",
+    input_shape=(224, 224, 3),
+)
+```
 
-### 3.4 Arquiteturas Clássicas
+### Exemplo didático: “detectar bordas”
 
-| Arquitetura | Ano | Características |
-|-------------|-----|-----------------|
-| **LeNet** | 1998 | Primeira CNN de sucesso (dígitos manuscritos) |
-| **AlexNet** | 2012 | Vencedora do ImageNet, popularizou Deep Learning |
-| **VGG** | 2014 | Arquitetura profunda com blocos repetidos |
-| **ResNet** | 2015 | Conexões residuais, permite redes muito profundas |
+O notebook também mostra um filtro clássico de borda com `cv2.filter2D()` (ideia de “primeiras camadas capturam bordas”).
+
+### Pooling
+
+Pooling reduz a resolução espacial e torna a rede mais robusta a pequenas variações.
+
+- **MaxPooling:** pega o maior valor em uma janela
+- **AveragePooling:** tira a média
+
+```python
+from tensorflow.keras.layers import MaxPooling2D
+pool = MaxPooling2D(pool_size=(2, 2))
+```
+
+### Arquiteturas clássicas
+
+| Arquitetura | Ano  | Características |
+|------------|------|-----------------|
+| **LeNet-5** | 1998 | CNN clássica para dígitos |
+| **AlexNet** | 2012 | Marco no ImageNet (ReLU, GPUs) |
+| **VGG**     | 2014 | Blocos repetidos com conv 3×3 |
+| **ResNet**  | 2015 | Skip connections (mitiga vanishing gradient) |
+
+### Exemplo de rede simples
+
+Fluxo (como no notebook):
+
+Imagem → Conv → Pooling → Conv → Pooling → Flatten → Dense → Classificação
+
+```python
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+
+model = Sequential([
+    Conv2D(32, (3, 3), activation="relu", input_shape=(224, 224, 3)),
+    MaxPooling2D(2, 2),
+    Conv2D(64, (3, 3), activation="relu"),
+    MaxPooling2D(2, 2),
+    Flatten(),
+    Dense(128, activation="relu"),
+    Dense(10, activation="softmax"),
+])
+```
 
 ---
 
 ## 4️⃣ Transfer Learning
 
-### 4.1 Conceito e Motivação
+Treinar CNNs do zero exige muitos dados e custo computacional. **Transfer Learning** reaproveita modelos pré-treinados (ex: ImageNet), onde as primeiras camadas já aprenderam padrões gerais (bordas, texturas, cores, formas).
 
-**Transfer Learning** consiste em aproveitar conhecimento de um modelo pré-treinado em uma tarefa grande (ex: ImageNet) e adaptá-lo para uma nova tarefa com menos dados.
+### Estratégias
 
-**Vantagens:**
-- ✅ Economiza tempo e recursos computacionais
-- ✅ Funciona bem com datasets pequenos
-- ✅ Melhora a performance em tarefas relacionadas
+- **Feature Extraction:** congela a base pré-treinada e treina apenas a “cabeça” final.
+- **Fine-Tuning:** descongela algumas camadas superiores e treina com *learning rate* menor.
 
-### 4.2 Estratégias
-
-1. **Feature Extraction:** Congela a base do modelo, treina apenas as últimas camadas
-2. **Fine-Tuning:** Descongela algumas camadas e as ajusta para a nova tarefa
-
-### 4.3 Exemplo com TensorFlow/Keras
+### Exemplo com TensorFlow/Keras (MobileNetV2)
 
 ```python
-from tensorflow.keras.applications import ResNet50
+from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras import layers, models
 
-# Carregar ResNet50 pré-treinada (sem o topo)
-base_model = ResNet50(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
-
-# Congelar a base
+base_model = MobileNetV2(weights="imagenet", include_top=False, input_shape=(224, 224, 3))
 base_model.trainable = False
 
-# Adicionar novas camadas
-model = models.Sequential([
-    base_model,
-    layers.GlobalAveragePooling2D(),
-    layers.Dense(256, activation='relu'),
-    layers.Dropout(0.5),
-    layers.Dense(10, activation='softmax')  # 10 classes
-])
-
-model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+x = base_model.output
+x = layers.GlobalAveragePooling2D()(x)
+x = layers.Dense(128, activation="relu")(x)
+predictions = layers.Dense(10, activation="softmax")(x)
+model = models.Model(inputs=base_model.input, outputs=predictions)
 ```
 
 ---
 
-## 5️⃣ Avaliação de Modelos de Visão
+## 5️⃣ Avaliação de modelos
 
-### 5.1 Métricas para Classificação
+No notebook aparecem métricas típicas:
 
-- **Accuracy:** Porcentagem de acertos
-- **Precision:** TP / (TP + FP)
-- **Recall:** TP / (TP + FN)
-- **F1-Score:** Harmônica entre Precision e Recall
+### Classificação
 
-### 5.2 Métricas para Detecção
+- Acurácia, precisão, recall, F1-score
+- Matriz de confusão
+- Curva ROC (em cenários binários)
 
-- **IoU (Intersection over Union):** Mede a sobreposição entre bbox predita e real
-- **mAP (mean Average Precision):** Média da AP de todas as classes
-- **Precision-Recall Curve:** Avalia o trade-off entre precisão e cobertura
+### Detecção/segmentação
 
-### 5.3 IoU (Intersection over Union)
+- **IoU (Intersection over Union):**
 
-```
-IoU = Área da Interseção / Área da União
-```
+$$
+IoU = \frac{\text{Área da Interseção}}{\text{Área da União}}
+$$
 
-- IoU > 0.5 geralmente é considerado detecção correta
+- **mAP (mean Average Precision):** métrica padrão em detecção
+- **Curva Precision–Recall:** trade-off entre precisão e recall ao variar o limiar de confiança
 
 ---
 
-## 6️⃣ Introdução ao Roboflow
+## 6️⃣ Roboflow
 
-### 6.1 O que é Roboflow?
+Roboflow é uma plataforma para gerenciar datasets de visão computacional (anotação, versões, exportação).
 
-**Roboflow** é uma plataforma para gerenciamento de datasets de visão computacional. Oferece:
-
-- Anotação de imagens
-- Preprocessamento (resize, augmentation)
-- Exportação para diversos formatos (YOLO, COCO, TensorFlow)
-- Integração com frameworks populares
-
-### 6.2 Roboflow Universe
-
-**Roboflow Universe** é um repositório de datasets públicos para visão computacional. Você pode:
-
-- Explorar milhares de datasets anotados
-- Fazer download direto para treinamento
-- Contribuir com seus próprios datasets
-
-🔗 **Link:** [https://universe.roboflow.com/](https://universe.roboflow.com/)
-
-### 6.3 Exportando Datasets
-
-1. Escolha o dataset no Roboflow Universe
-2. Selecione o formato de exportação (YOLO, COCO, etc.)
-3. Gere um link de download ou use a API
-4. Integre diretamente no código de treinamento
+🔗 https://roboflow.com
 
 ---
 
-## 7️⃣ Detecção de Objetos com YOLO
+## 7️⃣ Detecção de objetos com YOLO (YOLOv8)
 
-### 7.1 O que é YOLO?
+**YOLO** (“You Only Look Once”) trata detecção como um problema de regressão: em uma única passada a rede prevê caixas, classes e confiança.
 
-**YOLO (You Only Look Once)** é uma família de modelos de detecção de objetos em tempo real. Diferente de métodos tradicionais (R-CNN, Fast R-CNN), o YOLO:
+### Instalação (Ultralytics)
 
-- Prediz bounding boxes e classes em **uma única passagem**
-- É extremamente rápido (ideal para aplicações em tempo real)
-- Balanceia velocidade e precisão
-
-### 7.2 Evolução: YOLOv8 e YOLOv11
-
-| Versão | Ano | Características |
-|--------|-----|-----------------|
-| **YOLOv5** | 2020 | Primeira versão em PyTorch, muito popular |
-| **YOLOv8** | 2023 | Ultralytics, melhora na arquitetura e performance |
-| **YOLOv11** | 2024 | Última versão, ainda mais preciso e rápido |
-
-### 7.3 Instalação da Biblioteca Ultralytics
-
-```bash
-pip install ultralytics
+```python
+!pip install ultralytics
 ```
 
-### 7.4 Treinamento com Dataset Customizado
+### Dataset deste repositório
+
+O dataset está em `AWS-1/` (formato YOLOv8), com `train/`, `valid/` e `test/`.
+
+> Observação importante (igual à ideia do notebook “lembra de alterar o arquivo data”):
+> verifique o `AWS-1/data.yaml` antes de treinar. Para esta estrutura de pastas, os caminhos mais comuns são:
+
+```yaml
+train: train/images
+val: valid/images
+test: test/images
+```
+
+### Treinamento (API Python)
 
 ```python
 from ultralytics import YOLO
 
-# Carregar modelo pré-treinado
-model = YOLO('yolov8n.pt')  # nano (mais leve)
-
-# Treinar
-results = model.train(
-    data='dataset.yaml',  # arquivo de configuração do dataset
+model = YOLO("yolov8n.pt")
+model.train(
+    data="AWS-1/data.yaml",
     epochs=50,
     imgsz=640,
     batch=16,
-    name='custom_yolov8'
 )
 ```
 
-### 7.5 Inferência e Avaliação
+### Treinamento (CLI `yolo`)
+
+O notebook também mostra o uso da CLI do Ultralytics via `!yolo ...`.
 
 ```python
-# Validação
-metrics = model.val()
+!yolo task=detect mode=train model=yolov8l.pt data="AWS-1/data.yaml" epochs=2 imgsz=640 save_txt=true
+```
 
-# Inferência em novas imagens
-results = model.predict('test_image.jpg', conf=0.5)
+### Validação e predição
 
-# Visualizar resultados
-for r in results:
-    r.show()
+```python
+model.val()
+model.predict(source="image.jpg", save=True, conf=0.25)
 ```
 
 ---
 
-## 8️⃣ Atividade Prática
+## 8️⃣ Atividade Prática — MNIST (Classificação)
 
-### 8.1 Objetivo
+### Objetivo
 
-Treinar um modelo **YOLOv8** para detecção de objetos em um dataset customizado do **Roboflow Universe**.
+Treinar uma rede neural para **classificação de imagens no dataset MNIST**, experimentando diferentes arquiteturas, funções de ativação e otimizadores.
 
-### 8.2 Passo a Passo
+### Roteiro
 
-1. **Escolher um dataset no Roboflow Universe**
-   - Acesse [universe.roboflow.com](https://universe.roboflow.com/)
-   - Escolha um dataset de interesse (ex: detecção de placas, veículos, animais)
+1. Carregue o MNIST e normalize os dados (pixels de $[0, 255]$ para $[0, 1]$)
+2. Divida em treino, validação e teste
+   - **Treino:** 48.000 amostras
+   - **Validação:** 12.000 amostras
+   - **Teste:** 10.000 amostras
+3. Construa pelo menos 3 modelos diferentes variando:
+   - Número de camadas ocultas (1, 2 ou 3)
+   - Número de neurônios por camada (ex: 32, 64, 128, 256)
+   - Funções de ativação (ReLU, tanh, sigmoid)
+4. Compile cada modelo com:
+   - Otimizadores (SGD, Adam)
+   - Taxas de aprendizado (0.01, 0.001, 0.0001)
+   - Função de perda: `sparse_categorical_crossentropy`
+   - Métrica: `accuracy`
+5. Treine por até 20 épocas
+   - Use *early stopping* se desejar
+   - Monitore loss/accuracy de treino e validação
+6. Avalie no conjunto de teste e reporte:
+   - Acurácia final de cada modelo
+   - Matriz de confusão do melhor modelo
+   - Exemplos de erros (imagens classificadas incorretamente)
+7. Compare e discuta:
+   - Qual arquitetura performou melhor?
+   - Qual otimizador convergiu mais rápido?
+   - Houve overfitting? Como identificar?
+   - Quais hiperparâmetros mais impactaram?
 
-2. **Exportar o dataset em formato YOLO**
-   - Selecione a versão do dataset
-   - Clique em "Download" → "YOLOv8"
-   - Copie o código de download fornecido
+### Entrega
 
-3. **Configurar o ambiente no Google Colab**
-   ```python
-   !pip install ultralytics roboflow
-   ```
-
-4. **Baixar o dataset**
-   ```python
-   from roboflow import Roboflow
-   rf = Roboflow(api_key="YOUR_API_KEY")
-   project = rf.workspace("workspace-name").project("project-name")
-   dataset = project.version(1).download("yolov8")
-   ```
-
-5. **Treinar o modelo**
-   ```python
-   from ultralytics import YOLO
-   
-   model = YOLO('yolov8n.pt')
-   results = model.train(
-       data=f'{dataset.location}/data.yaml',
-       epochs=50,
-       imgsz=640,
-       batch=16
-   )
-   ```
-
-6. **Avaliar e fazer predições**
-   ```python
-   # Validação
-   metrics = model.val()
-   
-   # Inferência
-   results = model.predict('test_image.jpg')
-   ```
-
-### 8.3 Entrega
-
-**Formato:**
-
-1. **Notebook no Google Colab** (`.ipynb`) com:
-   - Células markdown explicando cada etapa
-   - Código executado com resultados visíveis
-   - Visualizações (curvas de treinamento, matriz de confusão)
-
-2. **Análise dos resultados:**
-   - mAP50, mAP50-95
-   - Precision e Recall por classe
-   - Exemplos de predições (corretas e incorretas)
-
-3. **Conclusão:**
-   - Desafios encontrados
-   - Possíveis melhorias (data augmentation, hyperparameter tuning)
-   - Aplicações práticas do modelo treinado
+1. Notebook executado (`.ipynb`) com markdown explicando cada etapa
+2. Gráficos obrigatórios:
+   - Curvas de perda (treino e validação)
+   - Curvas de acurácia (treino e validação)
+   - Matriz de confusão do melhor modelo
+3. Análise comparativa em markdown:
+   - Tabela comparando os modelos
+   - Discussão baseada nos resultados
+4. Conclusão sobre as melhores escolhas
 
 **Critérios de avaliação:**
-- ✅ Escolha adequada do dataset
-- ✅ Configuração correta do treinamento
-- ✅ Qualidade das visualizações
-- ✅ Análise crítica dos resultados
-- ✅ Clareza na documentação
+
+- Clareza na documentação (markdown)
+- Variedade de experimentos
+- Qualidade das visualizações
+- Profundidade da análise
+- Conclusões baseadas em evidências
 
 ---
 
-## 9️⃣ Conclusão e Próximos Passos
+## 📝 Observações de execução
 
-### O que você aprendeu?
-
-✅ Fundamentos de Visão Computacional  
-✅ Processamento de imagens com OpenCV  
-✅ CNNs e suas arquiteturas  
-✅ Transfer Learning para aproveitar modelos pré-treinados  
-✅ Métricas de avaliação para detecção  
-✅ Uso do Roboflow para gestão de datasets  
-✅ Detecção de objetos com YOLOv8  
-
-### Próximos Passos
-
-**1. Tópicos Avançados em Visão Computacional:**
-- Segmentação semântica (U-Net, Mask R-CNN)
-- Detecção de keypoints e pose estimation
-- Reconhecimento de ações em vídeo
-- GANs para geração de imagens
-
-**2. Otimização de Modelos:**
-- Quantização e pruning
-- Exportação para ONNX, TensorRT
-- Deploy em edge devices (Raspberry Pi, Jetson Nano)
-
-**3. Projetos Práticos:**
-- Sistema de vigilância inteligente
-- Contador de pessoas/veículos
-- Assistente de estacionamento
-- Inspeção de qualidade em manufatura
-
-**4. Certificações e Competições:**
-- [Kaggle Computer Vision Competitions](https://www.kaggle.com/competitions?search=computer+vision)
-- [Roboflow Competitions](https://blog.roboflow.com/computer-vision-competitions/)
+- O notebook mistura comandos de Jupyter/Colab (ex: `%pip`, `!yolo`). Em ambiente local, pode ser necessário adaptar caminhos e comandos.
+- Para treinos do YOLO, uma GPU (ex: Google Colab com GPU) acelera bastante.
 
 ---
 
-## 🔟 Referências
-
-### Livros
-- **"Deep Learning for Computer Vision"** - Rajalingappaa Shanmugamani
-- **"Computer Vision: Algorithms and Applications"** - Richard Szeliski (disponível gratuitamente online)
-- **"Modern Computer Vision with PyTorch"** - V Kishore Ayyadevara, Yeshwanth Reddy
-
-### Cursos Online
-- **Stanford CS231n:** Convolutional Neural Networks for Visual Recognition
-- **Fast.ai:** Practical Deep Learning for Coders
-- **Coursera:** Deep Learning Specialization (Andrew Ng)
-
-### Documentação e Tutoriais
-- [Ultralytics YOLOv8 Docs](https://docs.ultralytics.com/)
-- [Roboflow Blog](https://blog.roboflow.com/)
-- [OpenCV Tutorials](https://docs.opencv.org/4.x/d9/df8/tutorial_root.html)
-- [PyImageSearch](https://pyimagesearch.com/)
-
-### Papers Importantes
-- **AlexNet:** Krizhevsky et al. (2012) - ImageNet Classification with Deep CNNs
-- **VGG:** Simonyan & Zisserman (2014) - Very Deep CNNs
-- **ResNet:** He et al. (2015) - Deep Residual Learning
-- **YOLO:** Redmon et al. (2016) - You Only Look Once
-- **YOLOv8:** Ultralytics (2023) - YOLOv8 Technical Report
-
-### Datasets Populares
-- **ImageNet:** Classificação de imagens (1.4M imagens, 1000 classes)
-- **COCO:** Detecção, segmentação (200k imagens, 80 classes)
-- **Open Images:** Google (9M imagens, 600 classes)
-- **Roboflow Universe:** Milhares de datasets customizados
-
-### Comunidades
-- [Reddit r/computervision](https://www.reddit.com/r/computervision/)
-- [Ultralytics Community](https://community.ultralytics.com/)
-- [Roboflow Forum](https://discuss.roboflow.com/)
-
----
-
-## 📝 Observações Finais
-
-Este módulo foi projetado para ser executado no **Google Colab** com GPU ativada (Runtime → Change runtime type → GPU). Para datasets maiores, considere usar Colab Pro ou ambientes locais com GPU.
-
-**Estrutura do projeto recomendada:**
-```
-Aula 5/
-├── readme.md                  # Este arquivo
-├── notebook.ipynb             # Notebook principal com teoria e exemplos
-├── atividade_pratica.ipynb    # Notebook para a atividade com YOLO
-├── datasets/                  # Datasets baixados do Roboflow
-└── results/                   # Resultados dos treinamentos
-```
-
-**Recursos adicionais:**
-- Todos os códigos estão disponíveis e testados no Colab
-- Links para datasets e modelos pré-treinados incluídos
-- Suporte para dúvidas via issues no repositório do curso
-
----
-
-**Bons estudos! 🚀**
+**Bons estudos!**
 
 *Última atualização: Março 2026*
