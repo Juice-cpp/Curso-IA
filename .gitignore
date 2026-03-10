@@ -1,0 +1,28 @@
+# Ambientes Virtuais
+.venv/
+venv/
+env/
+ENV/
+
+# Arquivos compilados do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Configurações do PyCharm (IDE)
+.idea/
+*.iml
+
+# Variáveis de ambiente e segredos (NUNCA envie senhas para o Git)
+.env
+.env.local
+
+# Arquivos de distribuição, pacotes e logs
+build/
+dist/
+*.egg-info/
+*.log
+
+# Arquivos do sistema operacional (macOS / Windows)
+.DS_Store
+Thumbs.db
